@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { SortValue } from '@/components/sort';
+import { SortValue, sortKeyValue } from '@/components/sort';
 
 export type IssueType = {
   id: number;
@@ -31,7 +31,7 @@ const fetchIssues = async ({ pageParam = 1, org, sortValue }: { pageParam: numbe
 const useGithubIssues = (org: string, sortValue: SortValue) => {
   const queryClient = useQueryClient();
   const queryInfo = useInfiniteQuery({
-    queryKey: ['issues', org, sortValue],
+    queryKey: ['issues', org, sortKeyValue(sortValue)],
     queryFn: ({ pageParam = 1 }) => fetchIssues({ pageParam, org, sortValue }),
     getNextPageParam: (lastPage) => lastPage.issues.length ? lastPage.nextPage : undefined,
     initialPageParam: 1,
