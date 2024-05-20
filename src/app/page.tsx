@@ -15,22 +15,26 @@ export default function Home() {
   }));
 
   const onChangeSort = (event: ChangeEvent<HTMLSelectElement>): void => {
-    console.log('onChangeSort', event.target.value);
     setSortKey(event.target.value);
   };
 
   return (
     <main className="min-h-screen bg-gradient-to-r from-pink-500 to-blue-500 p-4">
       <Searchbar onSearch={query => setSearchQuery(query)} />
-      <SortList onChange={onChangeSort} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-lg shadow-md overflow-hidden max-w-[1400px] m-auto">
         {searchQuery && (
-          <CardList 
-            selected={selectedIssue}
-            sortValue={getSortValue(sortKey)}
-            searchQuery={searchQuery} 
-            onSelectIssue={issue => setSelectedIssue(issue)} />
+          <div className="bg-white">
+            <div className="flex border-b border-slate-300 border-r py-2 px-4">
+              <SortList onChange={onChangeSort} />
+            </div>
+
+            <CardList 
+              selected={selectedIssue}
+              sortValue={getSortValue(sortKey)}
+              searchQuery={searchQuery} 
+              onSelectIssue={issue => setSelectedIssue(issue)} />
+          </div>
         )}
         <div className="space-y-4 bg-white">
           {selectedIssue && <Detail issue={selectedIssue} />}

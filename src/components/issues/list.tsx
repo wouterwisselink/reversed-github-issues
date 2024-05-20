@@ -1,6 +1,7 @@
 import { useRef, useEffect, RefObject } from 'react';
-import Card from '@/components/issues/card';
+import useDebounce from '@/hooks/debounce';
 import useGithubIssues, { IssueType } from '@/server/github';
+import Card from '@/components/issues/card';
 import { SortValue } from '@/components/sort';
 
 type ListProps = {
@@ -25,14 +26,15 @@ export default function List(props: ListProps) {
         if (props.onSelectIssue) props.onSelectIssue(issue);
     };
 
-    const onScroll = (): void => {
+    const onScroll = useDebounce(() => {
         if (!containerRef.current) return;
         const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
         if (scrollTop + clientHeight >= scrollHeight) {
-            if (isLoading || isFetchingNextPage || !hasNextPage) return;
-            fetchNextPage();
+            if (!isLoading && !isFetchingNextPage && hasNextPage) {
+                fetchNextPage();
+            }
         }
-    }
+    }, 100);
 
     useEffect(() => {
         if (!containerRef.current) return;

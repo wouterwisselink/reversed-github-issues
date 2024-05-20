@@ -13,6 +13,7 @@ export default function Card({ issue, onClick, selected = false }: CardProps) {
   return (
     <div className={twMerge(
       'p-4 mb-4 border border-gray-300 rounded-lg shadow-sm bg-white cursor-pointer', 
+      'hover:border-gray-400 hover:shadow-lg',
       selected && 'border-sky-500 border-2'
     )} onClick={onClick}>
       <div className="flex items-center justify-between mb-2">

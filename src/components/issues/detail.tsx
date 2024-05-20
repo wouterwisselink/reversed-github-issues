@@ -9,7 +9,7 @@ type DetailProps = {
 
 export default function Detail(props: DetailProps) {
     return (
-        <div className="p-4 overflow-auto max-h-[80vh]">
+        <div className="p-4 overflow-auto" style={{ maxHeight: 'calc(80vh + 2.3em)' }}>
             <h1 className="text-lg font-semibold">{ props.issue.title }</h1>
             <a 
                 className="text-blue-700 underline flex gap-1 items-center text-sm"
